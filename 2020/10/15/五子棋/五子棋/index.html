@@ -23,18 +23,18 @@
   <meta name="description" content="五子棋棋盘由于五子棋比较小巧简单，所以我直接使用13×13棋盘 胜利条件判断123456789101112131415161718192021222324252627282930313233343536int situ_1[5][5]&#x3D;   &amp;#123;&amp;#123;1,1,1,1,1&amp;#125;,                         &amp;#123;0,0,0,0,0&amp;#125;,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="五子棋">
-<meta property="og:url" content="http://example.com/2020/10/14/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/index.html">
+<meta property="og:url" content="http://example.com/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/index.html">
 <meta property="og:site_name" content="LIU coder79 的博客">
 <meta property="og:description" content="五子棋棋盘由于五子棋比较小巧简单，所以我直接使用13×13棋盘 胜利条件判断123456789101112131415161718192021222324252627282930313233343536int situ_1[5][5]&#x3D;   &amp;#123;&amp;#123;1,1,1,1,1&amp;#125;,                         &amp;#123;0,0,0,0,0&amp;#125;,">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="d:/hexo/LIU-coder79.github.io/source_posts/五子棋/image-20200721202313276.png">
-<meta property="article:published_time" content="2020-10-14T14:31:14.853Z">
+<meta property="og:image" content="http://example.com/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/hexo/LIU-coder79.github.io/source_posts/五子棋/image-20200721202313276.png">
+<meta property="article:published_time" content="2020-10-15T11:10:29.246Z">
 <meta property="article:modified_time" content="2020-10-15T11:02:15.808Z">
 <meta property="article:author" content="LIU coder79">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="d:/hexo/LIU-coder79.github.io/source_posts/五子棋/image-20200721202313276.png">
+<meta name="twitter:image" content="http://example.com/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/hexo/LIU-coder79.github.io/source_posts/五子棋/image-20200721202313276.png">
 
-<link rel="canonical" href="http://example.com/2020/10/14/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/">
+<link rel="canonical" href="http://example.com/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/">
 
 
 <script id="page-configurations">
@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/14/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,16 +174,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-10-14 22:31:14" itemprop="dateCreated datePublished" datetime="2020-10-14T22:31:14+08:00">2020-10-14</time>
+              <time title="Created: 2020-10-15 19:10:29 / Modified: 19:02:15" itemprop="dateCreated datePublished" datetime="2020-10-15T19:10:29+08:00">2020-10-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-15 19:02:15" itemprop="dateModified" datetime="2020-10-15T19:02:15+08:00">2020-10-15</time>
-              </span>
 
           
 
@@ -200,7 +194,7 @@
 <h2 id="胜利条件判断"><a href="#胜利条件判断" class="headerlink" title="胜利条件判断"></a>胜利条件判断</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> situ_1[<span class="number">5</span>][<span class="number">5</span>]=   &#123;&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                         &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                         &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                         &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                         &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">           <span class="keyword">int</span> situ_2[<span class="number">5</span>][<span class="number">5</span>]= &#123;&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                              &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                              &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                              &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                              &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> situ_3[<span class="number">5</span>][<span class="number">5</span>]=  &#123;&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> situ_4[<span class="number">5</span>][<span class="number">5</span>]= &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                            &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                            &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                            &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                            &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> situ_5[<span class="number">5</span>][<span class="number">5</span>]=  &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> situ_6[<span class="number">5</span>][<span class="number">5</span>]=  &#123;&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;,</span><br><span class="line">                             &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>使用这样的二维数组判断，每次落子后扫描整个棋盘，发现这种情况就弹出messagebox，并清空棋盘</p>
-<p><img src="D:\hexo\LIU-coder79.github.io\source_posts\五子棋\image-20200721202313276.png" alt="image-20200721202313276"></p>
+<p><img src="/2020/10/15/%E4%BA%94%E5%AD%90%E6%A3%8B/%E4%BA%94%E5%AD%90%E6%A3%8B/hexo\LIU-coder79.github.io\source_posts\五子棋\image-20200721202313276.png" alt="image-20200721202313276"></p>
 
     </div>
 
@@ -215,11 +209,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/10/15/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" rel="next" title="图片测试">
-      图片测试 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/15/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" rel="prev" title="图片测试">
+      <i class="fa fa-chevron-left"></i> 图片测试
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
