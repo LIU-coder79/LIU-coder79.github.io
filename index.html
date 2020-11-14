@@ -145,6 +145,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/14/C++%E7%BB%84%E7%AC%AC%E5%9B%9B%E6%AC%A1%E6%8E%88%E8%AF%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LIU coder79">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIU coder79 的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/14/C++%E7%BB%84%E7%AC%AC%E5%9B%9B%E6%AC%A1%E6%8E%88%E8%AF%BE/" class="post-title-link" itemprop="url">C++组第四次授课</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-14 15:17:00 / Modified: 17:58:44" itemprop="dateCreated datePublished" datetime="2020-11-14T15:17:00+08:00">2020-11-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="STL库"><a href="#STL库" class="headerlink" title="STL库"></a>STL库</h1><p>C++ STL（标准模板库）是一套功能强大的 C++ 模板类，提供了通用的模板类和函数，这些模板类和函数可以实现多种流行和常用的算法和数据结构，如向量、链表、队列、栈。</p>
+<p>C++ 标准模板库的核心包括以下三个组件：</p>
+<table>
+<thead>
+<tr>
+<th align="left">组件</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">容器（Containers）</td>
+<td align="left">容器是用来管理某一类对象的集合。C++ 提供了各种不同类型的容器，比如 deque、list、vector、map 等。</td>
+</tr>
+<tr>
+<td align="left">算法（Algorithms）</td>
+<td align="left">算法作用于容器。它们提供了执行各种操作的方式，包括对容器内容执行初始化、排序、搜索和转换等操作。</td>
+</tr>
+<tr>
+<td align="left">迭代器（iterators）</td>
+<td align="left">迭代器用于遍历对象集合的元素。这些集合可能是容器，也可能是容器的子集。</td>
+</tr>
+</tbody></table>
+<p>这三个组件都带有丰富的预定义函数，帮助我们通过简单的方式处理复杂的任务。</p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><h3 id="容器种类"><a href="#容器种类" class="headerlink" title="容器种类"></a>容器种类</h3><table>
+<thead>
+<tr>
+<th>容器种类</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>序列容器</td>
+<td>主要包括 vector 向量容器、list 列表容器以及 deque 双端队列容器。之所以被称为序列容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置，元素就会位于什么位置。</td>
+</tr>
+<tr>
+<td>排序容器</td>
+<td>包括 set 集合容器、multiset多重集合容器、map映射容器以及 multimap 多重映射容器。排序容器中的元素默认是由小到大排序好的，即便是插入元素，元素也会插入到适当位置。所以关联容器在查找时具有非常好的性能。</td>
+</tr>
+<tr>
+<td>哈希容器</td>
+<td>C++11新加入 4 种关联式容器，分别是 unordered_set 哈希集合、unordered_multiset 哈希多重集合、unordered_map 哈希映射以及 unordered_multimap 哈希多重映射。和排序容器不同，哈希容器中的元素是未排序的，元素的位置由哈希函数确定。</td>
+</tr>
+</tbody></table>
+<p>除了这三种底层容器，还有两个容器适配器栈(stack)、队列(quene)和优先队列(priority_queue)。这两种容器是用上述的容器实现的。</p>
+<p>其中satck和quene使用deque作为基础容器，而priority_quene则使用vector。</p>
+<h3 id="迭代器-iterator"><a href="#迭代器-iterator" class="headerlink" title="迭代器(iterator)"></a>迭代器(iterator)</h3><p>尽管不同容器的内部结构各异，但它们本质上都是用来存储大量数据的，换句话说，都是一串能存储多个数据的存储单元。因此，诸如数据的排序、查找、求和等需要对数据进行遍历的操作方法应该是类似的。</p>
+<p>既然类似，完全可以利用泛型技术，将它们设计成适用所有容器的通用算法，从而将容器和算法分离开。但实现此目的需要有一个类似中介的装置，它除了要具有对容器进行遍历读写数据的能力之外，还要能对外隐藏容器的内部差异，从而以统一的界面向算法传送数据。</p>
+<p>这是泛型思维发展的必然结果，于是迭代器就产生了。简单来讲，迭代器和C++的指针非常类似，它可以是需要的任意类型，通过迭代器可以指向容器中的某个元素，如果需要，还可以对该元素进行读/写操作。</p>
+<p>迭代器有以下分类</p>
+<ol>
+<li><p>前向迭代器（forward iterator）<br>假设 p 是一个前向迭代器，则 p 支持 ++p，p++，*p 操作，还可以被复制或赋值，可以用 == 和 != 运算符进行比较。此外，两个正向迭代器可以互相赋值。</p>
+</li>
+<li><p>双向迭代器（bidirectional iterator）<br>双向迭代器具有正向迭代器的全部功能，除此之外，假设 p 是一个双向迭代器，则还可以进行 –p 或者 p– 操作（即一次向后移动一个位置）。</p>
+</li>
+<li><p>随机访问迭代器（random access iterator）<br>随机访问迭代器具有双向迭代器的全部功能。除此之外，假设 p 是一个随机访问迭代器，i 是一个整型变量或常量，则 p 还支持以下操作：</p>
+</li>
+</ol>
+<ul>
+<li>p+=i：使得 p 往后移动 i 个元素。</li>
+<li>p-=i：使得 p 往前移动 i 个元素。</li>
+<li>p+i：返回 p 后面第 i 个元素的迭代器。</li>
+<li>p-i：返回 p 前面第 i 个元素的迭代器。</li>
+<li>p[i]：返回 p 后面第 i 个元素的引用。</li>
+</ul>
+<p>此外，两个随机访问迭代器 p1、p2 还可以用 &lt;、&gt;、&lt;=、&gt;= 运算符进行比较。另外，表达式 p2-p1 也是有定义的，其返回值表示 p2 所指向元素和 p1 所指向元素的序号之差（也可以说是 p2 和 p1 之间的元素个数减一）。</p>
+<table>
+<thead>
+<tr>
+<th>容器</th>
+<th>对应的迭代器类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>array</td>
+<td>随机访问迭代器</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>随机访问迭代器</td>
+</tr>
+<tr>
+<td>deque</td>
+<td>随机访问迭代器</td>
+</tr>
+<tr>
+<td>list</td>
+<td>双向迭代器</td>
+</tr>
+<tr>
+<td>set / multiset</td>
+<td>双向迭代器</td>
+</tr>
+<tr>
+<td>map / multimap</td>
+<td>双向迭代器</td>
+</tr>
+<tr>
+<td>forward_list</td>
+<td>前向迭代器</td>
+</tr>
+<tr>
+<td>unordered_map / unordered_multimap</td>
+<td>前向迭代器</td>
+</tr>
+<tr>
+<td>unordered_set / unordered_multiset</td>
+<td>前向迭代器</td>
+</tr>
+<tr>
+<td>stack</td>
+<td>不支持迭代器</td>
+</tr>
+<tr>
+<td>queue</td>
+<td>不支持迭代器</td>
+</tr>
+</tbody></table>
+<h3 id="向量-vector"><a href="#向量-vector" class="headerlink" title="向量(vector)"></a>向量(vector)</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">// 创建一个向量存储 int</span></span><br><span class="line">   <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec; </span><br><span class="line">   <span class="keyword">int</span> i;</span><br><span class="line"> </span><br><span class="line">   <span class="comment">// 显示 vec 的原始大小</span></span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;vector size = &quot;</span> &lt;&lt; vec.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> </span><br><span class="line">   <span class="comment">// 推入 5 个值到向量中</span></span><br><span class="line">   <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">      vec.push_back(i);</span><br><span class="line">   &#125;</span><br><span class="line"> </span><br><span class="line">   <span class="comment">// 显示 vec 扩展后的大小</span></span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;extended vector size = &quot;</span> &lt;&lt; vec.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> </span><br><span class="line">   <span class="comment">// 访问向量中的 5 个值</span></span><br><span class="line">   <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value of vec [&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;] = &quot;</span> &lt;&lt; vec[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">   <span class="comment">// 使用迭代器 iterator 访问值</span></span><br><span class="line">   <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator v = vec.begin();</span><br><span class="line">   <span class="keyword">while</span>( v != vec.end()) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value of v = &quot;</span> &lt;&lt; *v &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      v++;<span class="comment">// v += 2;</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vector size &#x3D; 0</span><br><span class="line">extended vector size &#x3D; 5</span><br><span class="line">value of vec [0] &#x3D; 0</span><br><span class="line">value of vec [1] &#x3D; 1</span><br><span class="line">value of vec [2] &#x3D; 2</span><br><span class="line">value of vec [3] &#x3D; 3</span><br><span class="line">value of vec [4] &#x3D; 4</span><br><span class="line">value of v &#x3D; 0</span><br><span class="line">value of v &#x3D; 1</span><br><span class="line">value of v &#x3D; 2</span><br><span class="line">value of v &#x3D; 3</span><br><span class="line">value of v &#x3D; 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射-map"><a href="#映射-map" class="headerlink" title="映射(map)"></a>映射(map)</h3><p>作为关联式容器的一种，map 容器存储的都是 pair 对象，也就是用 pair 类模板创建的键值对。其中，各个键值对的键和值可以是任意数据类型，包括C++基本数据类型（int、double 等）、使用结构体或类自定义的类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; ma;</span><br><span class="line">    ma.emplace(<span class="number">1</span>, <span class="string">&quot;containers&quot;</span>);<span class="comment">//emplace在当前 map 容器中的指定位置处构造新键值对。</span></span><br><span class="line">    ma.emplace(<span class="number">0</span>, <span class="string">&quot;iterators&quot;</span>);</span><br><span class="line">    ma.emplace(<span class="number">2</span>, <span class="string">&quot;algorithms&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i = ma.begin(); i!= ma.end(); i++)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i-&gt;first &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; i-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 iterators</span><br><span class="line">1 containers</span><br><span class="line">2 algorithms</span><br></pre></td></tr></table></figure>
+
+<h3 id="哈希映射-unordered-map"><a href="#哈希映射-unordered-map" class="headerlink" title="哈希映射(unordered_map)"></a>哈希映射(unordered_map)</h3><p>从名字上可以看出，哈希映射相对关联式容器来说是unordered，即无序的。</p>
+<p>既然无序容器和之前所学的关联式容器类似，那么在实际使用中应该选哪种容器呢？总的来说，实际场景中如果涉及大量遍历容器的操作，建议首选关联式容器；反之，如果更多的操作是通过键获取对应的值，则应首选无序容器。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//创建并初始化一个 unordered_map 容器，其存储的 &lt;int,string&gt; 类型的键值对</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;<span class="built_in">std</span>::<span class="keyword">int</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; my_uMap&#123;</span><br><span class="line">        &#123;<span class="number">1</span>,<span class="string">&quot;containers&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="number">0</span>,<span class="string">&quot;iterators&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="number">2</span>,<span class="string">&quot;algorithms&quot;</span>&#125; &#125;;</span><br><span class="line">    <span class="comment">//查找指定键对应的值，效率比关联式容器高</span></span><br><span class="line">    <span class="built_in">string</span> str = my_uMap.at(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;str = &quot;</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//使用迭代器遍历哈希容器，效率不如关联式容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> iter = my_uMap.begin(); iter != my_uMap.end(); ++iter)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; iter-&gt;first &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; iter-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h3><p>stack 适配器的开头端通常称为栈顶。由于数据的存和取只能从栈顶处进行操作，因此对于存取数据，stack 适配器有这样的特性，即每次只能访问适配器中位于最顶端的元素，也只有移除 stack 顶部的元素之后，才能访问位于栈中的元素。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    s.push(<span class="number">0</span>);</span><br><span class="line">    s.push(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;s.top()&lt;&lt;<span class="built_in">endl</span>;;</span><br><span class="line">    s.pop();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;s.top()&lt;&lt;<span class="built_in">endl</span>;;</span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<h2 id="算法-algorithm"><a href="#算法-algorithm" class="headerlink" title="算法(algorithm)"></a>算法(algorithm)</h2><p>STL库中定义了很多函数，就举其中的sort()函数为例</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;     </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;    </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;       </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123; <span class="number">32</span>, <span class="number">71</span>, <span class="number">12</span>, <span class="number">45</span>, <span class="number">26</span>, <span class="number">80</span>, <span class="number">53</span>, <span class="number">33</span> &#125;;</span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.begin() + <span class="number">4</span>); </span><br><span class="line">    <span class="comment">//(12 32 45 71) 26 80 53 33</span></span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.begin() + <span class="number">4</span>, <span class="built_in">std</span>::greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">    <span class="comment">//(71 45 32 12) 26 80 53 33</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it = v.begin(); it != v.end(); ++it) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/29/C++%E7%BB%84%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8E%88%E8%AF%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -382,7 +579,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/iissnan/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
 
 <p>还有我用不了中文语言，使用中文就自动变成阿拉伯语，一直不知道什么原因。如果有人知道一定告诉我。</p>
-<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#x75;&#98;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#x75;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:username/username.github.io.git</p>
+<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:username/username.github.io.git</p>
 <h3 id="图片显示"><a href="#图片显示" class="headerlink" title="图片显示"></a>图片显示</h3><p>我也是试用了网络上很多方法，但是大部分都不好用，最后看来一篇csdn上的文章，终于弄明白了。（不会web的我都要强行看懂html唉）</p>
 <p>网页链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param</a></p>
 <p>大概按网上的教程，如果不行，将md文件中的图片路径改成</p>
@@ -603,7 +800,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
