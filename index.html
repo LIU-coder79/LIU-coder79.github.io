@@ -145,6 +145,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/26/C++%E7%BB%84%E7%AC%AC%E5%85%AD%E6%AC%A1%E6%8E%88%E8%AF%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LIU coder79">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIU coder79 的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/26/C++%E7%BB%84%E7%AC%AC%E5%85%AD%E6%AC%A1%E6%8E%88%E8%AF%BE/" class="post-title-link" itemprop="url">C++组第六次授课</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-11-26 17:11:54 / Modified: 19:42:40" itemprop="dateCreated datePublished" datetime="2020-11-26T17:11:54+08:00">2020-11-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="QT入门"><a href="#QT入门" class="headerlink" title="QT入门"></a>QT入门</h1><h2 id="QT简介"><a href="#QT简介" class="headerlink" title="QT简介"></a>QT简介</h2><p>Qt Creator是一个跨平台的、完整的Qt集成开发环境(IDE)，其中包括了改高级C++代码编辑器、项目和生成管理工具、集成的上下文相关的帮助系统、图形化调试器、代码管理和浏览工具等。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World!"></a>Hello World!</h2><h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><p>打开Qt Creator，选择文件——新建文件或项目——Application——Qt Widgets Application。在Build System中选择QWidget，Kits中全选即可，点击“完成”即创建出一个Qt项目。</p>
+<h3 id="用代码编写"><a href="#用代码编写" class="headerlink" title="用代码编写"></a>用代码编写</h3><p>在Headers文件夹中的widget.h中添加头文件和私有成员</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">QLabel *label;</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<p>在Sources文件夹下的widget.cpp中Widget的构造函数中加入以下代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">label = <span class="keyword">new</span> QLabel(<span class="keyword">this</span>);</span><br><span class="line">label-&gt;setText(tr(<span class="string">&quot;Hello World!&quot;</span>));</span><br><span class="line">label-&gt;show();</span><br></pre></td></tr></table></figure>
+
+<p>然后按左下角的绿色三角来运行，</p>
+<p>可以看到，Hello World!显示在了窗口的左上角。</p>
+<h3 id="用ui文件编写"><a href="#用ui文件编写" class="headerlink" title="用ui文件编写"></a>用ui文件编写</h3><p>选择Forms文件夹下的widget.ui文件，双击打开，在左侧工具栏中选出Label并拖到中间区域，在其中输入Hello World!，同样按左下角绿色三角运行，</p>
+<p>可以看到与代码编辑的效果相同。</p>
+<h3 id="软件发布"><a href="#软件发布" class="headerlink" title="软件发布"></a>软件发布</h3><p>想要我们写的程序在别人的电脑上运行，由于别人的电脑没有我们配置好的环境，所以需要很多.dll文件的支持，但是需要那些文件呢？Qt在安装的时候也安装了各个组件的release工具，来帮助我们找到并复制需要的文件。</p>
+<p>首先选择左下角的构建套件的构建方式，构建套件选择和一开始debug版本一样即可，构建方式选择release，</p>
+<p>运行成功后，在项目根目录下找到release生成的文件夹，找到项目名命名的.exe文件，将他复制到想要发布的文件夹内。</p>
+<p>打开开始菜单，找到对应构建套件的命令行，</p>
+<p>输入cd 文件夹的绝对路径</p>
+<p>然后输入windeployqt 项目名.exe</p>
+<p>这样，发布工具会自动把所需文件复合到刚刚新建的文件夹内，让后将文件夹打包，就可以在别的电脑上运行我们的程序了。</p>
+<h2 id="信号与槽的使用"><a href="#信号与槽的使用" class="headerlink" title="信号与槽的使用"></a>信号与槽的使用</h2><p>信号槽是 Qt 框架引以为豪的机制之一。当某个事件发生之后，比如，按钮检测到自己被点击了一下，它就会发出一个信号（signal）。这种发出是没有目的的，类似广播。如果有对象对这个信号感兴趣，它就会使用连接（connect）函数，意思是，将想要处理的信号和自己的一个函数（称为槽（slot））绑定来处理这个信号。也就是说，当信号发出时，被连接的槽函数会自动被回调。这就类似观察者模式：当发生了感兴趣的事件，某一个操作就会被自动触发。</p>
+<h3 id="用代码编写-1"><a href="#用代码编写-1" class="headerlink" title="用代码编写"></a>用代码编写</h3><h4 id="添加按钮"><a href="#添加按钮" class="headerlink" title="添加按钮"></a>添加按钮</h4><p>与添加label方法相同，只不过类型改为QPushButton</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QPushButton&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">QPushButton button;</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">button = <span class="keyword">new</span> QPushButton(<span class="keyword">this</span>);</span><br><span class="line">button-&gt;setText(tr(<span class="string">&quot;Push Me!&quot;</span>));</span><br><span class="line">button-&gt;move(<span class="number">30</span>,<span class="number">60</span>);</span><br><span class="line">button-&gt;show();</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们的程序上就添加了一个按钮，但是点击按钮没有反应，下面我们将要添加信号和槽来使点击按钮后，label向右移动。</p>
+<h4 id="写槽函数"><a href="#写槽函数" class="headerlink" title="写槽函数"></a>写槽函数</h4><p>在头文件中添加槽函数的定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">changeLabel</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在widget.cpp中实现该函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Widget::changeLabel</span><span class="params">()</span></span>&#123;</span><br><span class="line">    label-&gt;move(label-&gt;x()+<span class="number">30</span>,<span class="number">30</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处x()函数的作用使获取label的横坐标。</p>
+<h4 id="写信号函数"><a href="#写信号函数" class="headerlink" title="写信号函数"></a>写信号函数</h4><p>由于我们使用点击按钮作为信号，检测按钮点击的函数系统库中已经为我们写好，我们直接拿来用就行。</p>
+<h4 id="用connect语句将信号与槽连接"><a href="#用connect语句将信号与槽连接" class="headerlink" title="用connect语句将信号与槽连接"></a>用connect语句将信号与槽连接</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(button, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;Widget::changeLabel);</span><br></pre></td></tr></table></figure>
+
+<p>connect语句的最常用写法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(sender, signal, receiver, slot);</span><br></pre></td></tr></table></figure>
+
+<p>这样我们的按钮就写完了，运行程序，我们就可以看到，每点击一次按钮，hello world!就向右移动30.</p>
+<h3 id="用ui文件实现"><a href="#用ui文件实现" class="headerlink" title="用ui文件实现"></a>用ui文件实现</h3><p>同样使点击.ui文件，将PushButton拖到合适位置，改变按钮中文字。</p>
+<p>右键单击按钮，选择转到槽，在弹出的窗口中选择click()</p>
+<p>这时就会跳转到一个函数中，这就是我们所要写的槽函数，将槽函数实现，运行就可以发现，效果与用代码编写相同。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/14/C++%E7%BB%84%E7%AC%AC%E5%9B%9B%E6%AC%A1%E6%8E%88%E8%AF%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -579,7 +680,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/iissnan/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
 
 <p>还有我用不了中文语言，使用中文就自动变成阿拉伯语，一直不知道什么原因。如果有人知道一定告诉我。</p>
-<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:username/username.github.io.git</p>
+<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#105;&#116;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#x63;&#x6f;&#x6d;</a>:username/username.github.io.git</p>
 <h3 id="图片显示"><a href="#图片显示" class="headerlink" title="图片显示"></a>图片显示</h3><p>我也是试用了网络上很多方法，但是大部分都不好用，最后看来一篇csdn上的文章，终于弄明白了。（不会web的我都要强行看懂html唉）</p>
 <p>网页链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param</a></p>
 <p>大概按网上的教程，如果不行，将md文件中的图片路径改成</p>
@@ -800,7 +901,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
