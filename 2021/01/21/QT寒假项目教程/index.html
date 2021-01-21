@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="添加音乐文件并播放新建一个QMainWindow的项目，要想使用QT有关多媒体的API，需要在.pro文件中添加 1QT       +&#x3D; multimedia  添加文件按钮添加按钮，并选择合适的位置和大小，在按钮的槽函数中，打开QFileDialog，并把选中的文件名保存到QStringList中。并把文件名逐行显示到一个QPlainTextEdit中（其实这里显然使用QListWdiget更">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QT寒假项目教程">
+<meta property="og:url" content="http://example.com/2021/01/21/QT%E5%AF%92%E5%81%87%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="LIU coder79 的博客">
+<meta property="og:description" content="添加音乐文件并播放新建一个QMainWindow的项目，要想使用QT有关多媒体的API，需要在.pro文件中添加 1QT       +&#x3D; multimedia  添加文件按钮添加按钮，并选择合适的位置和大小，在按钮的槽函数中，打开QFileDialog，并把选中的文件名保存到QStringList中。并把文件名逐行显示到一个QPlainTextEdit中（其实这里显然使用QListWdiget更">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-21T07:37:27.000Z">
+<meta property="article:modified_time" content="2021-01-21T10:14:11.789Z">
+<meta property="article:author" content="LIU coder79">
+<meta property="article:tag" content="Winter Of Code">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/21/QT%E5%AF%92%E5%81%87%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>QT寒假项目教程 | LIU coder79 的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LIU coder79 的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/21/QT%E5%AF%92%E5%81%87%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LIU coder79">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIU coder79 的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          QT寒假项目教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-21 15:37:27 / Modified: 18:14:11" itemprop="dateCreated datePublished" datetime="2021-01-21T15:37:27+08:00">2021-01-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="添加音乐文件并播放"><a href="#添加音乐文件并播放" class="headerlink" title="添加音乐文件并播放"></a>添加音乐文件并播放</h1><p>新建一个QMainWindow的项目，要想使用QT有关多媒体的API，需要在.pro文件中添加</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += multimedia</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加文件按钮"><a href="#添加文件按钮" class="headerlink" title="添加文件按钮"></a>添加文件按钮</h2><p>添加按钮，并选择合适的位置和大小，在按钮的槽函数中，打开QFileDialog，并把选中的文件名保存到QStringList中。并把文件名逐行显示到一个QPlainTextEdit中（其实这里显然使用QListWdiget更合适，我当时没想到，以后优化的时候再搞）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">QString curPash =QDir::currentPath();</span><br><span class="line">    QString dlgTitle=<span class="string">&quot;选择音频文件&quot;</span>;</span><br><span class="line">    QString filter=<span class="string">&quot;音频文件(*.mp3 *.wav *.wma)mp3文件(*.mp3);;wav文件(*.wav);;wma文件(*.wma);;所有文件(*.*)&quot;</span>;</span><br><span class="line">    fileList = QFileDialog::getOpenFileNames(<span class="keyword">this</span>,dlgTitle,curPash,filter);</span><br><span class="line">    <span class="keyword">if</span>(fileList.count()&lt;<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;fileList.count();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        musicList-&gt;appendPlainText(fileList.at(i));</span><br><span class="line">        <span class="comment">//将选择的文件显示在文本框上</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>让后就可以读取QStringList的第一个文件路径下的文件，进行播放了。</p>
+<h2 id="播放音乐文件"><a href="#播放音乐文件" class="headerlink" title="播放音乐文件"></a>播放音乐文件</h2><p>在头文件中加入两个私有对象。记得添加对应的头文件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QMediaPlayer *player;</span><br><span class="line">QMediaPlaylist *playlist;</span><br></pre></td></tr></table></figure>
+
+<p>初始化两个对象，并设置循环方式为列表循环播放</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">player = <span class="keyword">new</span> QMediaPlayer(<span class="keyword">this</span>);</span><br><span class="line">playlist = <span class="keyword">new</span> QMediaPlaylist(<span class="keyword">this</span>);</span><br><span class="line">playlist-&gt;setPlaybackMode(QMediaPlaylist::Loop);</span><br><span class="line">player-&gt;setPlaylist(playlist);</span><br></pre></td></tr></table></figure>
+
+<p>在槽函数中加入代码，将QStringList中的QString一个一个读取，放入playlist中，并调用player中的方法播放。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;fileList.count();i++)</span><br><span class="line">   &#123;</span><br><span class="line">       QString aFile = fileList.at(i);</span><br><span class="line">       playlist-&gt;addMedia(QUrl::fromLocalFile(aFile));</span><br><span class="line">       <span class="function">QFileInfo <span class="title">fileInfo</span><span class="params">(aFile)</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(player-&gt;state()!=QMediaPlayer::PlayingState)</span><br><span class="line">   &#123;</span><br><span class="line">       playlist-&gt;setCurrentIndex(<span class="number">0</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   player-&gt;play();</span><br></pre></td></tr></table></figure>
+
+<p>这里player-&gt;state()函数的作用是返回播放器的状态，如PlayingState，值为1，代表播放状态。</p>
+<p>playlist-&gt;setCurrentIndex(0)这个函数的作用为设置播放列表的序号，这里把当前播放的全部设置为0，但是在播放列表的功能里，比如切换到下一首歌，可以将序号设置为0，1，2，3等。</p>
+<p>然后将信号和槽关联</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(<span class="keyword">this</span>-&gt;openFile, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;PlayerList::openFileButtonClicked);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="添加进度条"><a href="#添加进度条" class="headerlink" title="添加进度条"></a>添加进度条</h2><p>进度条这里我直接在.ui文件里写了。。偷懒了，下次一定。</p>
+<p>在.ui文件中拖入horizontalSlider，右键选择转到槽，信号选择sliderReleased，因为是要等鼠标离开进度条才开始调用槽函数。</p>
+<p>在槽函数中添加代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span>-&gt;player-&gt;setPosition(ui-&gt;horizontalSlider-&gt;value());</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以实现拖动进度条，改变播放进度了。</p>
+<p>接着我们在.ui中拖入QLabel，因为懒得找位置了。。。</p>
+<p>我们将用这个QLabel来显示当前播放时间和歌曲总时长。</p>
+<p>因为每次更换歌曲，或者拖动歌曲的进度条，时间会发生变化，所以要写两个槽函数来接收时间改变的信号，更换QLabel上的时间。</p>
+<p>这是改变歌曲总时长的槽函数，因为获取歌曲时长的函数，单位为ms，所以要变换一下才能为我们常见的分与秒。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::onDurationChanged</span><span class="params">(qint64 duration)</span></span>&#123;</span><br><span class="line">    ui-&gt;horizontalSlider-&gt;setMaximum(duration); <span class="comment">//设置进度条最大值 也就是歌曲时长 ms</span></span><br><span class="line">    <span class="keyword">int</span> secs = duration/<span class="number">1000</span>; <span class="comment">//全部秒数</span></span><br><span class="line">    <span class="keyword">int</span> mins = secs/<span class="number">60</span>;<span class="comment">//分</span></span><br><span class="line">    secs = secs % <span class="number">60</span>;<span class="comment">//秒</span></span><br><span class="line">    durationTime = QString::asprintf(<span class="string">&quot;%d:%d&quot;</span>,mins,secs);</span><br><span class="line">    ui-&gt;label-&gt;setText(positionTime+<span class="string">&quot;/&quot;</span>+durationTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理改变进度条位置的槽函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::onPositionChanged</span><span class="params">(qint64 position)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ui-&gt;horizontalSlider-&gt;isSliderDown())</span><br><span class="line">        <span class="keyword">return</span>;<span class="comment">//如果手动调整进度条，则不处理</span></span><br><span class="line">    ui-&gt;horizontalSlider-&gt;setSliderPosition(position);</span><br><span class="line">    <span class="keyword">int</span> secs = position/<span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">int</span> mins = secs/<span class="number">60</span>;</span><br><span class="line">    secs = secs % <span class="number">60</span>;</span><br><span class="line">    positionTime = QString::asprintf(<span class="string">&quot;%d:%d&quot;</span>,mins,secs);</span><br><span class="line">    ui-&gt;label-&gt;setText(positionTime+<span class="string">&quot;/&quot;</span>+durationTime);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数中添加关联</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connect(<span class="built_in">list</span>-&gt;player, &amp;QMediaPlayer::positionChanged, <span class="keyword">this</span>, &amp;MainWindow::onPositionChanged);</span><br><span class="line">connect(<span class="built_in">list</span>-&gt;player, &amp;QMediaPlayer::durationChanged, <span class="keyword">this</span>, &amp;MainWindow::onDurationChanged);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Winter-Of-Code/" rel="tag"># Winter Of Code</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/26/C++%E7%BB%84%E7%AC%AC%E5%85%AD%E6%AC%A1%E6%8E%88%E8%AF%BE/" rel="prev" title="C++组第六次授课">
+      <i class="fa fa-chevron-left"></i> C++组第六次授课
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%96%87%E4%BB%B6%E5%B9%B6%E6%92%AD%E6%94%BE"><span class="nav-number">1.</span> <span class="nav-text">添加音乐文件并播放</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E6%8C%89%E9%92%AE"><span class="nav-number">1.1.</span> <span class="nav-text">添加文件按钮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E9%9F%B3%E4%B9%90%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">播放音乐文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">1.3.</span> <span class="nav-text">添加进度条</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LIU coder79</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LIU coder79</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

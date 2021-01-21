@@ -145,6 +145,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/21/QT%E5%AF%92%E5%81%87%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LIU coder79">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LIU coder79 的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/QT%E5%AF%92%E5%81%87%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">QT寒假项目教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-21 15:37:27 / Modified: 18:14:11" itemprop="dateCreated datePublished" datetime="2021-01-21T15:37:27+08:00">2021-01-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="添加音乐文件并播放"><a href="#添加音乐文件并播放" class="headerlink" title="添加音乐文件并播放"></a>添加音乐文件并播放</h1><p>新建一个QMainWindow的项目，要想使用QT有关多媒体的API，需要在.pro文件中添加</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT       += multimedia</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加文件按钮"><a href="#添加文件按钮" class="headerlink" title="添加文件按钮"></a>添加文件按钮</h2><p>添加按钮，并选择合适的位置和大小，在按钮的槽函数中，打开QFileDialog，并把选中的文件名保存到QStringList中。并把文件名逐行显示到一个QPlainTextEdit中（其实这里显然使用QListWdiget更合适，我当时没想到，以后优化的时候再搞）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">QString curPash =QDir::currentPath();</span><br><span class="line">    QString dlgTitle=<span class="string">&quot;选择音频文件&quot;</span>;</span><br><span class="line">    QString filter=<span class="string">&quot;音频文件(*.mp3 *.wav *.wma)mp3文件(*.mp3);;wav文件(*.wav);;wma文件(*.wma);;所有文件(*.*)&quot;</span>;</span><br><span class="line">    fileList = QFileDialog::getOpenFileNames(<span class="keyword">this</span>,dlgTitle,curPash,filter);</span><br><span class="line">    <span class="keyword">if</span>(fileList.count()&lt;<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;fileList.count();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        musicList-&gt;appendPlainText(fileList.at(i));</span><br><span class="line">        <span class="comment">//将选择的文件显示在文本框上</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>让后就可以读取QStringList的第一个文件路径下的文件，进行播放了。</p>
+<h2 id="播放音乐文件"><a href="#播放音乐文件" class="headerlink" title="播放音乐文件"></a>播放音乐文件</h2><p>在头文件中加入两个私有对象。记得添加对应的头文件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QMediaPlayer *player;</span><br><span class="line">QMediaPlaylist *playlist;</span><br></pre></td></tr></table></figure>
+
+<p>初始化两个对象，并设置循环方式为列表循环播放</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">player = <span class="keyword">new</span> QMediaPlayer(<span class="keyword">this</span>);</span><br><span class="line">playlist = <span class="keyword">new</span> QMediaPlaylist(<span class="keyword">this</span>);</span><br><span class="line">playlist-&gt;setPlaybackMode(QMediaPlaylist::Loop);</span><br><span class="line">player-&gt;setPlaylist(playlist);</span><br></pre></td></tr></table></figure>
+
+<p>在槽函数中加入代码，将QStringList中的QString一个一个读取，放入playlist中，并调用player中的方法播放。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;fileList.count();i++)</span><br><span class="line">   &#123;</span><br><span class="line">       QString aFile = fileList.at(i);</span><br><span class="line">       playlist-&gt;addMedia(QUrl::fromLocalFile(aFile));</span><br><span class="line">       <span class="function">QFileInfo <span class="title">fileInfo</span><span class="params">(aFile)</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(player-&gt;state()!=QMediaPlayer::PlayingState)</span><br><span class="line">   &#123;</span><br><span class="line">       playlist-&gt;setCurrentIndex(<span class="number">0</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   player-&gt;play();</span><br></pre></td></tr></table></figure>
+
+<p>这里player-&gt;state()函数的作用是返回播放器的状态，如PlayingState，值为1，代表播放状态。</p>
+<p>playlist-&gt;setCurrentIndex(0)这个函数的作用为设置播放列表的序号，这里把当前播放的全部设置为0，但是在播放列表的功能里，比如切换到下一首歌，可以将序号设置为0，1，2，3等。</p>
+<p>然后将信号和槽关联</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect(<span class="keyword">this</span>-&gt;openFile, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;PlayerList::openFileButtonClicked);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="添加进度条"><a href="#添加进度条" class="headerlink" title="添加进度条"></a>添加进度条</h2><p>进度条这里我直接在.ui文件里写了。。偷懒了，下次一定。</p>
+<p>在.ui文件中拖入horizontalSlider，右键选择转到槽，信号选择sliderReleased，因为是要等鼠标离开进度条才开始调用槽函数。</p>
+<p>在槽函数中添加代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span>-&gt;player-&gt;setPosition(ui-&gt;horizontalSlider-&gt;value());</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以实现拖动进度条，改变播放进度了。</p>
+<p>接着我们在.ui中拖入QLabel，因为懒得找位置了。。。</p>
+<p>我们将用这个QLabel来显示当前播放时间和歌曲总时长。</p>
+<p>因为每次更换歌曲，或者拖动歌曲的进度条，时间会发生变化，所以要写两个槽函数来接收时间改变的信号，更换QLabel上的时间。</p>
+<p>这是改变歌曲总时长的槽函数，因为获取歌曲时长的函数，单位为ms，所以要变换一下才能为我们常见的分与秒。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::onDurationChanged</span><span class="params">(qint64 duration)</span></span>&#123;</span><br><span class="line">    ui-&gt;horizontalSlider-&gt;setMaximum(duration); <span class="comment">//设置进度条最大值 也就是歌曲时长 ms</span></span><br><span class="line">    <span class="keyword">int</span> secs = duration/<span class="number">1000</span>; <span class="comment">//全部秒数</span></span><br><span class="line">    <span class="keyword">int</span> mins = secs/<span class="number">60</span>;<span class="comment">//分</span></span><br><span class="line">    secs = secs % <span class="number">60</span>;<span class="comment">//秒</span></span><br><span class="line">    durationTime = QString::asprintf(<span class="string">&quot;%d:%d&quot;</span>,mins,secs);</span><br><span class="line">    ui-&gt;label-&gt;setText(positionTime+<span class="string">&quot;/&quot;</span>+durationTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理改变进度条位置的槽函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MainWindow::onPositionChanged</span><span class="params">(qint64 position)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ui-&gt;horizontalSlider-&gt;isSliderDown())</span><br><span class="line">        <span class="keyword">return</span>;<span class="comment">//如果手动调整进度条，则不处理</span></span><br><span class="line">    ui-&gt;horizontalSlider-&gt;setSliderPosition(position);</span><br><span class="line">    <span class="keyword">int</span> secs = position/<span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">int</span> mins = secs/<span class="number">60</span>;</span><br><span class="line">    secs = secs % <span class="number">60</span>;</span><br><span class="line">    positionTime = QString::asprintf(<span class="string">&quot;%d:%d&quot;</span>,mins,secs);</span><br><span class="line">    ui-&gt;label-&gt;setText(positionTime+<span class="string">&quot;/&quot;</span>+durationTime);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数中添加关联</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connect(<span class="built_in">list</span>-&gt;player, &amp;QMediaPlayer::positionChanged, <span class="keyword">this</span>, &amp;MainWindow::onPositionChanged);</span><br><span class="line">connect(<span class="built_in">list</span>-&gt;player, &amp;QMediaPlayer::durationChanged, <span class="keyword">this</span>, &amp;MainWindow::onDurationChanged);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/26/C++%E7%BB%84%E7%AC%AC%E5%85%AD%E6%AC%A1%E6%8E%88%E8%AF%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -168,10 +267,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-11-26 17:11:54 / Modified: 19:42:40" itemprop="dateCreated datePublished" datetime="2020-11-26T17:11:54+08:00">2020-11-26</time>
+              <time title="Created: 2020-11-26 17:11:54" itemprop="dateCreated datePublished" datetime="2020-11-26T17:11:54+08:00">2020-11-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-11-28 10:36:08" itemprop="dateModified" datetime="2020-11-28T10:36:08+08:00">2020-11-28</time>
+              </span>
 
           
 
@@ -184,7 +289,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="QT入门"><a href="#QT入门" class="headerlink" title="QT入门"></a>QT入门</h1><h2 id="QT简介"><a href="#QT简介" class="headerlink" title="QT简介"></a>QT简介</h2><p>Qt Creator是一个跨平台的、完整的Qt集成开发环境(IDE)，其中包括了改高级C++代码编辑器、项目和生成管理工具、集成的上下文相关的帮助系统、图形化调试器、代码管理和浏览工具等。</p>
+          <h1 id="QT入门"><a href="#QT入门" class="headerlink" title="QT入门"></a>QT入门</h1><h2 id="QT简介"><a href="#QT简介" class="headerlink" title="QT简介"></a>QT简介</h2><p>Qt Creator是一个跨平台的、完整的Qt集成开发环境(IDE)，其中包括了高级C++代码编辑器、项目和生成管理工具、集成的上下文相关的帮助系统、图形化调试器、代码管理和浏览工具等。</p>
 <h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World!"></a>Hello World!</h2><h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><p>打开Qt Creator，选择文件——新建文件或项目——Application——Qt Widgets Application。在Build System中选择QWidget，Kits中全选即可，点击“完成”即创建出一个Qt项目。</p>
 <h3 id="用代码编写"><a href="#用代码编写" class="headerlink" title="用代码编写"></a>用代码编写</h3><p>在Headers文件夹中的widget.h中添加头文件和私有成员</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">QLabel *label;</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
@@ -680,7 +785,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/iissnan/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
 
 <p>还有我用不了中文语言，使用中文就自动变成阿拉伯语，一直不知道什么原因。如果有人知道一定告诉我。</p>
-<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#109;">&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#x63;&#111;&#109;</a>:username/username.github.io.git</p>
+<h3 id="使用hexo-deploy命令，每次都要输入账号密码"><a href="#使用hexo-deploy命令，每次都要输入账号密码" class="headerlink" title="使用hexo deploy命令，每次都要输入账号密码"></a>使用hexo deploy命令，每次都要输入账号密码</h3><p>这个比较简单，将根目录下_config.yml中的deploy的repo配置改为<a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#46;&#99;&#111;&#x6d;">&#103;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#46;&#99;&#111;&#x6d;</a>:username/username.github.io.git</p>
 <h3 id="图片显示"><a href="#图片显示" class="headerlink" title="图片显示"></a>图片显示</h3><p>我也是试用了网络上很多方法，但是大部分都不好用，最后看来一篇csdn上的文章，终于弄明白了。（不会web的我都要强行看懂html唉）</p>
 <p>网页链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">https://blog.csdn.net/qq_44875386/article/details/105510258?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param</a></p>
 <p>大概按网上的教程，如果不行，将md文件中的图片路径改成</p>
@@ -901,12 +1006,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -933,7 +1038,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
